@@ -14,18 +14,16 @@ def OCR_digits(digits):
         i = i / 255
         i = i[4:i.shape[0] - 4, 4:i.shape[1] - 4]
         i = cv2.resize(i, (28, 28))
-        #j=i.copy()
-        #j=cv2.adaptiveThreshold(j,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY_INV,39,11)
+       
         i = i.reshape(1, 28, 28, 1)
         pred = model.predict(i)
         prediction = model.predict_classes(i)
         p = np.amax(pred)
 
-        '''if np.sum(j)<20000:
-            digits_numerical.append(0)'''
+        
 
         if p > 0.75:
-            digits_numerical.append(model.predict_classes(i)[0])
+            digits_numerical.append(model.predict_classes(i)[0]) # This idea of using confidence percentage to check if a digit exists was obtained from the youtube Murztasa
         else:
             digits_numerical.append(0)
 
@@ -43,10 +41,10 @@ def OCR_digits(digits):
 
         mask=np.zeros(ct.shape,np.uint8)
         cv2.drawContours(mask, [cont], -1, 255, -1)
-        (h,w)=ct.shape
-        percentFilled = cv2.countNonZero(mask) / float(w * h)
+        (a,b)=ct.shape
+        percent = cv2.countNonZero(mask) / float(a * b)
 
-        if percentFilled<=0.05:
+        if percent<=0.05:
             digits_numerical[i]=0
 
 
