@@ -1,5 +1,5 @@
 # Sudoku_solver
-Given an image of a sudoku puzzle, solve the puzzle
+Given an photo of a sudoku puzzle, solve the puzzle
 
 High Level Details:
 
